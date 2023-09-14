@@ -1,0 +1,36 @@
+1 . install truffle/hardhat globally.
+
+2.  Then create folder 
+3.  Go inside that folder and open terminal 
+
+4. Type Truffle / hardhat init 
+5. Then create contract and compile it  using Truffle compile
+6. Then deploy it using Truffle deploy 
+
+7. save the contract address 
+8. open build folder just create and copy abi of your contract 
+
+9. create Frontend folder now and create react app using another text file 
+
+10. then Create 'web3.js' file in src folder and Write : 
+    
+   import Web3 from 'web3';
+   const web3 = new Web3(window.ethereum); 
+
+   export default web3; 
+
+11. Then create your contract file name with any name 'Name.js'  in same src folder and write :
+
+  import web3 from './web3';
+  const address = '<Contract address>'; 
+
+  const abi = Your abi 
+  export default new web3.eth.Contract(abi,address);
+
+
+12. Now to use web3 import it as './web3'
+
+Import web3 from './web3';
+import Name from './Name';
+
+13. Happy hacking

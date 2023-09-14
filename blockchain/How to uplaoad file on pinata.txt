@@ -1,0 +1,83 @@
+Code for sending file to pinata 
+
+
+
+ const [file, setFile] = useState(null);   // is used to set file variable  
+
+const fileInput = useRef(null); // set file input to null  
+
+
+const handelFileChange = (e) => {
+    setFile(e.target.files[0]);     // this is function to handel file  
+                                   //  selection
+  }; 
+
+
+const handelSubmit = async (e) => {
+    e.preventDefault();
+    console.log(file);           // handel file submit  console file  
+
+
+
+      if (file) { 
+
+      try {
+
+          const formData = new FormData();
+          formData.append("file", file);
+
+          const resFile = await axios({
+              method: "post",
+              url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
+              data: formData,
+              headers: {
+                        'pinata_api_key': `${process.env.REACT_APP_PINATA_API_KEY}`,
+                        'pinata_secret_api_key': `${process.env.REACT_APP_PINATA_API_SECRET}`,  // add env to root directory and 
+                                                                                               //   create see example at end
+                        "Content-Type": "multipart/form-data"
+                    },
+          });
+
+          const ImgHash = `ipfs://${resFile.data.IpfsHash}`;
+       console.log(ImgHash); 
+//Take a look at your Pinata Pinned section, you will see a new file added to you list.   
+
+
+
+      } catch (error) {
+          console.log("Error sending File to IPFS: ")
+          console.log(error)
+      }
+  } 
+};  
+
+
+
+
+
+
+env file 
+
+REACT_APP_PINATA_API_KEY = "api key";
+REACT_APP_PINATA_API_SECRET = "api secret key";
+REACT_APP_PINATA_Jwt_SECRET = "jwt secret" (optional) 
+
+
+
+HTML format for example 
+
+
+<form onSubmit={handelSubmit} >
+        <input
+          type="file"
+          ref={fileInput}
+          onChange={handelFileChange}
+        />
+        <button type='submit'>UPLOAD</button>
+</form>
+
+
+
+
+
+

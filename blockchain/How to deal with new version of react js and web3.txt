@@ -1,0 +1,102 @@
+1. npx create-react-app my-app  cd email-app
+
+2. cd my-app
+
+3. npm i web3 
+
+4. npm install --save-dev react-app-rewired crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url buffer process tty-browserify  browserify-zlib 
+
+5.  Create 'config-overrides.js' in the root of your project folder with the content (in my-app)  
+
+6. Write this in that file:
+
+const webpack = require('webpack');
+
+module.exports = function override(config) {
+    const fallback = config.resolve.fallback || {};
+    Object.assign(fallback, {
+        "crypto": require.resolve("crypto-browserify"),
+        "stream": require.resolve("stream-browserify"),
+        "assert": require.resolve("assert"),
+        "http": require.resolve("stream-http"),
+        "https": require.resolve("https-browserify"),
+        "os": require.resolve("os-browserify"),
+        "url": require.resolve("url"),
+        "tty": require.resolve("tty-browserify"), 
+        "zlib":require.resolve("browserify-zlib")
+    })
+    config.resolve.fallback = fallback;
+    config.plugins = (config.plugins || []).concat([
+        new webpack.ProvidePlugin({
+            process: 'process/browser',
+            Buffer: ['buffer', 'Buffer']
+        })
+    ])
+    return config;
+} 
+
+
+
+
+7.  Within 'package.json' change the scripts field for start, build and test. Instead of react-scripts replace it with react-app-rewired 
+
+
+before:
+
+"scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+}, 
+
+
+after:
+
+"scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+},  
+
+
+
+
+
+8 . Last One 
+
+
+Add the following lines to 'polyfills.js' file Create in SRC folder 
+
+ import {Buffer} from 'buffer';
+
+window.global = window;
+global.Buffer = Buffer;
+global.process = {
+    env : {DEBUG : undefined},
+    version : '',
+    nextTick : require('next-tick')
+}; 
+
+
+and import  this file to main index.js 
+
+
+import './polyfills'; 
+
+
+
+now Run command npm start !!!!!!!! 
+happy hacking
+
+
+
+
+
+
+
+
+
+
+
