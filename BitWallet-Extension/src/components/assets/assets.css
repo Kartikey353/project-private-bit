@@ -1,0 +1,36 @@
+.assetscontainer {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid primary;
+}
+
+.headbar {
+  color: white;
+  margin-top: 5rem;
+  text-align: center;
+}
+
+.linktoken {
+  color: rgb(70, 144, 255); 
+}
+
+.linktoken:hover {
+  cursor: pointer;
+}  
+
+.importtokenpage{
+  position: absolute;
+  z-index: 1500;
+  top: 0; 
+  color: white; 
+  height: 100vh; 
+  width: 500px;
+  background-color: black;   
+  padding: 20px;
+} 
+
+.hidden {
+  display: none;
+}
